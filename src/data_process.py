@@ -1,6 +1,8 @@
 from netCDF4 import Dataset
+# import h5py
 
 nc_file_path = '../data/order2/S-OSI_-NOR_-MULT-GL_SH_TYPEn_-201903011200Z.nc'
+# hdf5_file_path = '../data/order1/HDF5_LSASAF_MSG_SC2_MSG-Disk_201903010000'
 
 dataset = Dataset(nc_file_path)
 
