@@ -56,25 +56,21 @@ def get_all_dates_and_means(datasets):
     return dataframes
 
 
-def plot_data(path, sorted_df):
+def plot_data(sorted_df, title):
     plt.plot(sorted_df.Datatime, sorted_df.Mean, 'm*')
     plt.ylabel('ice conc')
     plt.xlabel('date')
     plt.xticks(rotation=20)
-    day = sorted_df.Datatime[0]
-    month = str(day.year) + '.' + str(day.month)
-    title = path + ': Ice conc in ' + month
     plt.title(title)
-    plt.savefig('../plots/' + path + month + '.png', dpi=100)
+    plt.savefig('../plots/' + title + '.png', dpi=100)
     plt.show()
 
 
-#TODO change to good method
-def plot_histogram(sorted_df):
-    # the histogram of the data
-    n, bins, patches = plt.hist(sorted_df.Mean, density=1, facecolor='m', alpha=0.75)
-    plt.title('Histogram')
+def plot_histogram(sorted_df, title):
+    plt.hist(sorted_df.Mean, density=1, facecolor='m', alpha=0.75)
+    plt.title(title)
     plt.grid(True)
+    plt.savefig('../plots/' + title + '.png', dpi=100)
     plt.show()
 
 
@@ -87,30 +83,101 @@ def plot_boxplot(sorted_df):
 def create_dataframes(datasets):
     data = get_all_dates_and_means(datasets)
     df = pd.DataFrame(data, columns=['Datatime', 'Mean', 'Std', 'Timestamp'])
-    # print(df)
-    # for i in df:
-    #     print(df.Timestamp)
     sorted_df = df.sort_values(by=['Timestamp'])
     print(sorted_df)
     return sorted_df
 
 
-def read_and_plot_path(path):
+def read_and_plot_month(path, year, month):
     alldataset = []
-    for filename in glob.iglob('../data/2010/01/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/' + month + '/' + path + '/*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
 
     sorted_df = create_dataframes(alldataset)
 
-    plot_data(path, sorted_df)
-    # plot_histogram(sorted_df)
+    title1 = path + ': Ice conc in ' + year + '-' + month
+    plot_data(sorted_df, title1)
+    # plot_boxplot(sorted_df)
+
+
+def read_and_plot_year(path, year):
+    alldataset = []
+    for filename in glob.iglob('../data/' + year + '/01/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/02/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/03/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/04/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/05/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/06/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/07/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/08/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/09/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/10/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/11/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+    for filename in glob.iglob('../data/' + year + '/12/' + path + '/*.nc'):
+        dataset = Dataset(filename)
+        alldataset.append(dataset)
+
+    sorted_df = create_dataframes(alldataset)
+
+    title1 = path + ': Ice conc in ' + year
+    plot_data(sorted_df, title1)
+    title2 = path + ': Histogram ' + year
+    plot_histogram(sorted_df, title2)
     # plot_boxplot(sorted_df)
 
 
 def main():
-    read_and_plot_path('nh')
-    read_and_plot_path('sh')
+    year = '2010'
+    read_and_plot_month('nh', year, '01')
+    read_and_plot_month('sh', year, '01')
+    read_and_plot_month('nh', year, '02')
+    read_and_plot_month('sh', year, '02')
+    read_and_plot_month('nh', year, '03')
+    read_and_plot_month('sh', year, '03')
+    read_and_plot_month('nh', year, '04')
+    read_and_plot_month('sh', year, '04')
+    read_and_plot_month('nh', year, '05')
+    read_and_plot_month('sh', year, '05')
+    read_and_plot_month('nh', year, '06')
+    read_and_plot_month('sh', year, '06')
+    read_and_plot_month('nh', year, '07')
+    read_and_plot_month('sh', year, '07')
+    read_and_plot_month('nh', year, '08')
+    read_and_plot_month('sh', year, '08')
+    read_and_plot_month('nh', year, '09')
+    read_and_plot_month('sh', year, '09')
+    read_and_plot_month('nh', year, '10')
+    read_and_plot_month('sh', year, '10')
+    read_and_plot_month('nh', year, '11')
+    read_and_plot_month('sh', year, '11')
+    read_and_plot_month('nh', year, '12')
+    read_and_plot_month('sh', year, '12')
+
+    read_and_plot_year('nh', year='2010')
+    read_and_plot_year('sh', year='2010')
 
 
 if __name__== "__main__":
