@@ -56,10 +56,14 @@ def get_all_dates_and_means(datasets):
     return dataframes
 
 
-def plot_data(sorted_df):
+def plot_data(path, sorted_df):
     plt.plot(sorted_df.Datatime, sorted_df.Mean, 'm*')
-    plt.ylabel('ice')
+    plt.ylabel('ice conc')
     plt.xlabel('date')
+    plt.xticks(rotation=20)
+    day = sorted_df.Datatime[0]
+    title = path + ': Ice conc in ' + str(day.year) + '.' + str(day.month)
+    plt.title(title)
     plt.show()
 
 
@@ -85,7 +89,7 @@ def create_dataframes(datasets):
     # for i in df:
     #     print(df.Timestamp)
     sorted_df = df.sort_values(by=['Timestamp'])
-    # print(sorted_df)
+    print(sorted_df)
     return sorted_df
 
 
@@ -97,8 +101,8 @@ def read_and_plot_path(path):
 
     sorted_df = create_dataframes(alldataset)
 
-    plot_data(sorted_df)
-    plot_histogram(sorted_df)
+    plot_data(path, sorted_df)
+    # plot_histogram(sorted_df)
     # plot_boxplot(sorted_df)
 
 
