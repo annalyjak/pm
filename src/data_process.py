@@ -62,8 +62,10 @@ def plot_data(path, sorted_df):
     plt.xlabel('date')
     plt.xticks(rotation=20)
     day = sorted_df.Datatime[0]
-    title = path + ': Ice conc in ' + str(day.year) + '.' + str(day.month)
+    month = str(day.year) + '.' + str(day.month)
+    title = path + ': Ice conc in ' + month
     plt.title(title)
+    plt.savefig('../plots/' + path + month + '.png', dpi=100)
     plt.show()
 
 
