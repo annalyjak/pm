@@ -4,6 +4,7 @@ from datetime import datetime
 import glob
 import matplotlib.pyplot as plt
 import pandas as pd
+from pandas.plotting import register_matplotlib_converters
 
 
 def start_info_print():
@@ -103,42 +104,18 @@ def read_and_plot_month(path, year, month):
 
 def read_and_plot_year(path, year):
     alldataset = []
-    for filename in glob.iglob('../data/' + year + '/01/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/02/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/03/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/04/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/05/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/06/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/07/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/08/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/09/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/10/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/11/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/12/*' + path + '*.nc'):
-        dataset = Dataset(filename)
-        alldataset.append(dataset)
+    count = 1
+    while count < 10:
+        for filename in glob.iglob('../data/' + year + '/0' + str(count) + '/*' + path + '*.nc'):
+            dataset = Dataset(filename)
+            alldataset.append(dataset)
+        count = count + 1
+    count = 10
+    while count <= 12:
+        for filename in glob.iglob('../data/' + year + '/' + str(count) + '/*' + path + '*.nc'):
+            dataset = Dataset(filename)
+            alldataset.append(dataset)
+        count = count + 1
 
     sorted_df = create_dataframes(alldataset)
 
@@ -149,34 +126,64 @@ def read_and_plot_year(path, year):
     # plot_boxplot(sorted_df)
 
 
+def read_and_plot_all_years(path, year_start, year_end):
+    alldataset = []
+    year = int(year_start)
+    while year <= int(year_end):
+        count = 1
+        while count < 10:
+            for filename in glob.iglob('../data/' + str(year) + '/0' + str(count) + '/*' + path + '*.nc'):
+                dataset = Dataset(filename)
+                alldataset.append(dataset)
+            count = count + 1
+        count = 10
+        while count <= 12:
+            for filename in glob.iglob('../data/' + str(year) + '/' + str(count) + '/*' + path + '*.nc'):
+                dataset = Dataset(filename)
+                alldataset.append(dataset)
+            count = count + 1
+        year = year + 1
+
+    sorted_df = create_dataframes(alldataset)
+
+    title1 = path + ': Ice conc' # + year
+    plot_data(sorted_df, title1)
+    title2 = path + ': Histogram' # + year
+    plot_histogram(sorted_df, title2)
+    # plot_boxplot(sorted_df)
+
+
 def main():
+    register_matplotlib_converters()
     year = '2015'
-    read_and_plot_month('nh', year, '01')
-    read_and_plot_month('sh', year, '01')
-    read_and_plot_month('nh', year, '02')
-    read_and_plot_month('sh', year, '02')
-    read_and_plot_month('nh', year, '03')
-    read_and_plot_month('sh', year, '03')
-    read_and_plot_month('nh', year, '04')
-    read_and_plot_month('sh', year, '04')
-    read_and_plot_month('nh', year, '05')
-    read_and_plot_month('sh', year, '05')
-    read_and_plot_month('nh', year, '06')
-    read_and_plot_month('sh', year, '06')
-    read_and_plot_month('nh', year, '07')
-    read_and_plot_month('sh', year, '07')
-    read_and_plot_month('nh', year, '08')
-    read_and_plot_month('sh', year, '08')
-    read_and_plot_month('nh', year, '09')
-    read_and_plot_month('sh', year, '09')
-    read_and_plot_month('nh', year, '10')
-    read_and_plot_month('sh', year, '10')
-    read_and_plot_month('nh', year, '11')
-    read_and_plot_month('sh', year, '11')
-    read_and_plot_month('nh', year, '12')
-    read_and_plot_month('sh', year, '12')
-    read_and_plot_year('nh', year=year)
-    read_and_plot_year('sh', year=year)
+    # read_and_plot_month('nh', year, '01')
+    # read_and_plot_month('sh', year, '01')
+    # read_and_plot_month('nh', year, '02')
+    # read_and_plot_month('sh', year, '02')
+    # read_and_plot_month('nh', year, '03')
+    # read_and_plot_month('sh', year, '03')
+    # read_and_plot_month('nh', year, '04')
+    # read_and_plot_month('sh', year, '04')
+    # read_and_plot_month('nh', year, '05')
+    # read_and_plot_month('sh', year, '05')
+    # read_and_plot_month('nh', year, '06')
+    # read_and_plot_month('sh', year, '06')
+    # read_and_plot_month('nh', year, '07')
+    # read_and_plot_month('sh', year, '07')
+    # read_and_plot_month('nh', year, '08')
+    # read_and_plot_month('sh', year, '08')
+    # read_and_plot_month('nh', year, '09')
+    # read_and_plot_month('sh', year, '09')
+    # read_and_plot_month('nh', year, '10')
+    # read_and_plot_month('sh', year, '10')
+    # read_and_plot_month('nh', year, '11')
+    # read_and_plot_month('sh', year, '11')
+    # read_and_plot_month('nh', year, '12')
+    # read_and_plot_month('sh', year, '12')
+    # read_and_plot_year('nh', year=year)
+    # read_and_plot_year('sh', year=year)
+
+    read_and_plot_all_years('nh', '2010', '2015')
 
 
 if __name__== "__main__":
