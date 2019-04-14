@@ -148,9 +148,9 @@ def read_and_plot_all_years(path, year_start, year_end):
 
     sorted_df = create_dataframes(alldataset)
 
-    title1 = path + ': Ice conc' # + year
+    title1 = path + ': Ice conc'
     plot_data(sorted_df, title1)
-    title2 = path + ': Histogram' # + year
+    title2 = path + ': Histogram'
     plot_histogram(sorted_df, title2)
     # plot_boxplot(sorted_df)
 
@@ -185,7 +185,7 @@ def main():
     # read_and_plot_year('nh', year=year)
     # read_and_plot_year('sh', year=year)
 
-    read_and_plot_all_years('nh', '2000', '2015')
+    # read_and_plot_all_years('nh', '2000', '2015')
 
 
 if __name__== "__main__":
