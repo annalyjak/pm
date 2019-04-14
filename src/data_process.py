@@ -53,7 +53,9 @@ def get_all_dates_and_means(datasets):
     dataframes = []
     for dataset in datasets:
         d, m, s = calculate_mean(dataset)
-        dataframes.append([datetime.fromtimestamp(d), m, s, int(d)])
+        d8 = datetime.fromtimestamp(d)
+        d8 = d8.replace(year=int(d8.year + 8))
+        dataframes.append([d8, m, s, int(d)])
     return dataframes
 
 
@@ -156,7 +158,7 @@ def read_and_plot_all_years(path, year_start, year_end):
 def main():
     register_matplotlib_converters()
     year = '2015'
-    # read_and_plot_month('nh', year, '01')
+    read_and_plot_month('nh', year, '01')
     # read_and_plot_month('sh', year, '01')
     # read_and_plot_month('nh', year, '02')
     # read_and_plot_month('sh', year, '02')
