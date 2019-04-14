@@ -90,7 +90,7 @@ def create_dataframes(datasets):
 
 def read_and_plot_month(path, year, month):
     alldataset = []
-    for filename in glob.iglob('../data/' + year + '/' + month + '/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/' + month + '/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
 
@@ -103,40 +103,40 @@ def read_and_plot_month(path, year, month):
 
 def read_and_plot_year(path, year):
     alldataset = []
-    for filename in glob.iglob('../data/' + year + '/01/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/01/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/02/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/02/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/03/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/03/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/04/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/04/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/05/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/05/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/06/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/06/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/07/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/07/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/08/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/08/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/09/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/09/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/10/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/10/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/11/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/11/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
-    for filename in glob.iglob('../data/' + year + '/12/' + path + '/*.nc'):
+    for filename in glob.iglob('../data/' + year + '/12/*' + path + '*.nc'):
         dataset = Dataset(filename)
         alldataset.append(dataset)
 
@@ -150,7 +150,7 @@ def read_and_plot_year(path, year):
 
 
 def main():
-    year = '2010'
+    year = '2015'
     read_and_plot_month('nh', year, '01')
     read_and_plot_month('sh', year, '01')
     read_and_plot_month('nh', year, '02')
@@ -175,9 +175,8 @@ def main():
     read_and_plot_month('sh', year, '11')
     read_and_plot_month('nh', year, '12')
     read_and_plot_month('sh', year, '12')
-
-    read_and_plot_year('nh', year='2010')
-    read_and_plot_year('sh', year='2010')
+    read_and_plot_year('nh', year=year)
+    read_and_plot_year('sh', year=year)
 
 
 if __name__== "__main__":
