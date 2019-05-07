@@ -23,7 +23,23 @@ def plot_histogram(sorted_df, title):
     plt.show()
 
 
+def plot_model(model, X_test, Y_test, Y_pred):
+    # # The coefficients
+    # print('Coefficients: \n', model.coef_)
+    # # The mean squared error
+    # print("Mean squared error: %.2"
+    #       % mean_squared_error(Y_test, diabetes_y_pred))
+    # # Explained variance score: 1 is perfect prediction
+    # print('Variance score: %.2f' % r2_score(Y_test, diabetes_y_pred))
 
+    # Plot outputs
+    plt.scatter(X_test, Y_test, color='black')
+    plt.plot(X_test, Y_pred, color='blue', linewidth=3)
+
+    # plt.xticks(())
+    # plt.yticks(())
+
+    plt.show()
 
 
 
