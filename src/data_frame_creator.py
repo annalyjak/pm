@@ -3,6 +3,15 @@ from datetime import datetime
 import pandas as pd
 
 
+def create_temp_frames(dataset):
+    temperature_analysis = dataset.variables['T']
+    Height = dataset.variables['Height']
+    date = dataset.variables['TIME']
+    for t in temperature_analysis:
+        temperature = np.mean(t)
+    return date, temperature
+
+
 def calculate_mean2(dataset):
     timestamp = None
     mean = None
@@ -26,6 +35,14 @@ def calculate_mean2(dataset):
     return timestamp, mean1Goddard, std, mean2NASA, mean3Bootstrap
 
 
+def get_all_temperatures_mean(datasets):
+    dataframes = []
+    for dataset, date in datasets:
+        a1, a2 = create_temp_frames(dataset)
+        dataframes.append([a1, a2, int(date)])
+    return dataframes
+
+
 def get_all_dates_and_means2(datasets):
     dataframes = []
     for dataset, date in datasets:
@@ -40,6 +57,15 @@ def create_dataframes(datasets):
     data = get_all_dates_and_means2(datasets)
     # Goddard Edited Climate Data Record of Passive Microwave Monthly Northern Hemisphere Sea Ice Concentration
     df = pd.DataFrame(data, columns=['Datatime', 'Mean', 'Std', 'NASA', 'Bootstrap', 'YearMonth'])
+    sorted_df = df.sort_values(by=['YearMonth'])
+    print(sorted_df)
+    return sorted_df
+
+
+def create_dataframes_temp(datasets):
+    data = get_all_temperatures_mean(datasets)
+    # Goddard Edited Climate Data Record of Passive Microwave Monthly Northern Hemisphere Sea Ice Concentration
+    df = pd.DataFrame(data, columns=['Datatime', 'TempA', 'YearMonth'])
     sorted_df = df.sort_values(by=['YearMonth'])
     print(sorted_df)
     return sorted_df

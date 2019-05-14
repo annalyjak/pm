@@ -23,7 +23,7 @@ def plot_histogram(sorted_df, title):
     plt.show()
 
 
-def plot_model(model, X_test, Y_test, Y_pred):
+def plot_model(model, X_test, Y_test, Y_pred, x_train_l, x_test_l):
     # # The coefficients
     # print('Coefficients: \n', model.coef_)
     # # The mean squared error
@@ -36,7 +36,7 @@ def plot_model(model, X_test, Y_test, Y_pred):
     plt.scatter(X_test, Y_test, color='black')
     plt.plot(X_test, Y_pred, color='blue', linewidth=3)
 
-    # plt.xticks(())
+    plt.xticks(())
     # plt.yticks(())
 
     plt.show()

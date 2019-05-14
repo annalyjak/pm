@@ -1,5 +1,7 @@
+import numpy as np
 from sklearn.svm import SVR
 from sklearn import linear_model
+from statsmodels.tsa.ar_model import AR
 from sklearn.metrics import mean_squared_error, r2_score
 
 
@@ -40,3 +42,9 @@ def create_model(X, y):
     model = SVR(kernel='poly')
     model.fit(X, y)
     return model
+
+
+def create_ar(trainData):
+    model = AR(np.asarray(trainData))
+    model_fit = model.fit(maxlag=6, disp=False)
+    return model_fit

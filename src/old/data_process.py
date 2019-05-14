@@ -7,6 +7,19 @@ import pandas as pd
 from pandas.plotting import register_matplotlib_converters
 
 
+def info_data_temperature():
+    nc_file = '../data/temp/MERRA300.prod.assim.instM_3d_asm_Cp.200712.hdf.nc'
+    dataset = Dataset(nc_file)
+
+    # To check what kind of keys we have
+    print(dataset.variables.keys())
+    print(dataset.variables['T'])
+    print(dataset.variables['Height'])
+    print(dataset.variables['TIME'])
+    print(dataset.variables['XDim'])
+    print(dataset.variables['YDim'])
+
+
 def info_data_nsidc():
     nc_file = '../data/north/monthly/seaice_conc_monthly_nh_f08_198708_v03r01.nc'
     dataset = Dataset(nc_file)

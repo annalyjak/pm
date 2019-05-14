@@ -2,9 +2,8 @@ from netCDF4 import Dataset
 import glob
 from pandas.plotting import register_matplotlib_converters
 from src.charts_generator import plot_data2, plot_histogram, plot_model
-from src.data_frame_creator import create_dataframes
-from src.model_creator import create_model, linear_regression_model, predict_using_model, svr_model, svr_lin_model, \
-    svr_poly_model
+from src.data_frame_creator import create_dataframes, create_dataframes_temp
+from src.model_creator import create_model, linear_regression_model, predict_using_model, svr_model, svr_lin_model
 import numpy as np
 
 
@@ -19,6 +18,17 @@ def read_nsidc_all(path, year_start, year_end):
         year = year + 1
 
     return create_dataframes(alldataset)
+
+
+def read_nsidc_temp(path):
+    alldataset = []
+    for filename in glob.iglob('../data/' + path + '/*.nc'):
+        dataset = Dataset(filename, 'r')
+        date = filename[len(filename) - 13:len(filename) - 7]
+        print(date)
+        alldataset.append([dataset, date])
+
+    return create_dataframes_temp(alldataset)
 
 
 def read_year(path, year):
@@ -55,17 +65,20 @@ def plot_data(path, year_start, year_end):
 
 
 def split_into_sets(data):
-    x = list(zip(data.YearMonth))
+    x_labels = [str(x) for x in data.YearMonth]
+    x = list(zip(range(0, len(data.YearMonth))))   # data.YearMonth
     y = list(data.NASA) # MUST BE NOT NAN AND INF
-    x_train = x[:200]
-    y_train = y[:200]
-    x_test = x[200:]
-    y_test = y[200:]
-    return x_train, y_train, x_test, y_test
+    x_train = x[:30]
+    y_train = y[:30]
+    x_train_label = x_labels[:30]
+    x_test = x[30:]
+    y_test = y[30:]
+    x_test_label = x_labels[30:]
+    return x_train, y_train, x_test, y_test, x_train_label, x_test_label
 
 
 def model_procedure(data):
-    x_train, y_train, x_test, y_test = split_into_sets(data)
+    x_train, y_train, x_test, y_test, x_train_l, x_test_l = split_into_sets(data)
     # print(len(x_train))
     # print(len(y_train))
     # print(np.any(np.isnan(x_train))) # and gets False
@@ -73,8 +86,8 @@ def model_procedure(data):
     # print(np.any(np.isnan(y_train)))  # and gets False
     # print(np.all(np.isfinite(y_train)))  # and gets True
     regr = linear_regression_model(x_train, y_train)
-    diabetes_y_pred = predict_using_model(regr, x_test)
-    plot_model(regr, x_test, y_test, diabetes_y_pred)
+    y_pred = predict_using_model(regr, x_test)
+    plot_model(regr, x_test, y_test, y_pred, x_train_l, x_test_l)
 
 
 def main():
@@ -88,8 +101,12 @@ def main():
     # plot_data('south', '1979', '2017')
 
     # get data:
-    data = read_nsidc_all('north', '1980', '2017')
-    model_procedure(data)
+    # data = read_nsidc_all('north', '1985', '1990')
+    # model_procedure(data)
+
+    read_nsidc_temp('temp')
+    # info_data_temperature()
+
 
 
 if __name__ == "__main__":
