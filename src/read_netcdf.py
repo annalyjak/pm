@@ -1,7 +1,7 @@
 from netCDF4 import Dataset
 import glob
 from pandas.plotting import register_matplotlib_converters
-from src.charts_generator import plot_data2, plot_histogram, plot_model
+from src.charts_generator import plot_data2, plot_histogram, plot_model, plot_temperature
 from src.data_frame_creator import create_dataframes, create_dataframes_temp
 from src.model_creator import create_model, linear_regression_model, predict_using_model, svr_model, svr_lin_model
 import numpy as np
@@ -104,9 +104,8 @@ def main():
     # data = read_nsidc_all('north', '1985', '1990')
     # model_procedure(data)
 
-    read_nsidc_temp('temp')
-    # info_data_temperature()
-
+    dataset = read_nsidc_temp('temp')
+    plot_temperature(dataset, 'Temperatura w 1979-2016')
 
 
 if __name__ == "__main__":

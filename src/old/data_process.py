@@ -128,7 +128,7 @@ def get_all_dates_and_means(datasets):
         d, m, s = calculate_mean(dataset)
         d8 = datetime.fromtimestamp(d)
         d8 = d8.replace(year=int(d8.year + 8))
-        dataframes.append([d8, m, s, int(d)])
+        dataframes.append([d8, m, s, int(d), str(d)])
     return dataframes
 
 

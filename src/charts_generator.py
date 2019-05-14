@@ -2,6 +2,16 @@
 import matplotlib.pyplot as plt
 
 
+def plot_temperature(temperatures, title):
+    plt.plot(temperatures.YearMonthStr, temperatures.TempCelc, 'm*')
+    plt.ylabel('temperature')
+    plt.xlabel('date')
+    plt.xticks(rotation=50)
+    plt.title(title)
+    plt.savefig('../plots/' + title + '.png', dpi=100)
+    plt.show()
+
+
 def plot_data2(sorted_df, title):
     plt.plot(sorted_df.Datatime, sorted_df.Mean, 'm')
     plt.plot(sorted_df.Datatime, sorted_df.NASA, 'g')

@@ -9,7 +9,7 @@ def create_temp_frames(dataset):
     date = dataset.variables['TIME']
     for t in temperature_analysis:
         temperature = np.mean(t)
-    return date, temperature
+    return date, temperature, temperature - 273.15
 
 
 def calculate_mean2(dataset):
@@ -38,8 +38,8 @@ def calculate_mean2(dataset):
 def get_all_temperatures_mean(datasets):
     dataframes = []
     for dataset, date in datasets:
-        a1, a2 = create_temp_frames(dataset)
-        dataframes.append([a1, a2, int(date)])
+        a1, a2, a3 = create_temp_frames(dataset)
+        dataframes.append([a1, a2, a3, int(date), str(date)])
     return dataframes
 
 
@@ -65,7 +65,7 @@ def create_dataframes(datasets):
 def create_dataframes_temp(datasets):
     data = get_all_temperatures_mean(datasets)
     # Goddard Edited Climate Data Record of Passive Microwave Monthly Northern Hemisphere Sea Ice Concentration
-    df = pd.DataFrame(data, columns=['Datatime', 'TempA', 'YearMonth'])
+    df = pd.DataFrame(data, columns=['Datatime', 'TempK', 'TempCelc', 'YearMonth', 'YearMonthStr'])
     sorted_df = df.sort_values(by=['YearMonth'])
     print(sorted_df)
     return sorted_df
