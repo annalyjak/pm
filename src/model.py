@@ -1,4 +1,5 @@
 import src.read_netcdf as reader
+import pandas as pd
 from statsmodels.tsa.ar_model import AR
 import numpy as np
 from pandas import Series
@@ -18,6 +19,7 @@ data = reader.read_nsidc_all('north', '1979', '2017')
 
 trainData = [x for x in data.Mean[1:455] if x is not None]  # data.Mean[-350:-12]
 trainData = np.nan_to_num(trainData)
+trainData = pd.Series(trainData)
 # print(len(trainData))
 testData = []
 for i in range(455,467):
