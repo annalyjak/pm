@@ -1,10 +1,10 @@
-import read_netcdf as reader
+import src.read_netcdf as reader
+import pandas as pd
 from statsmodels.tsa.ar_model import AR
 import numpy as np
 from pandas import Series
 from matplotlib import pyplot
 from sklearn.metrics import mean_squared_error
-
 
 
 def predict(coef, history):
@@ -15,10 +15,12 @@ def predict(coef, history):
 # create a difference transform of the dataset
 
 
-
 data = reader.read_nsidc_all('north', '1979', '2017')
 
-trainData = data.Mean[-350:-12]
+trainData = [x for x in data.Mean[1:455] if x is not None]  # data.Mean[-350:-12]
+trainData = np.nan_to_num(trainData)
+trainData = pd.Series(trainData)
+# print(len(trainData))
 testData = []
 for i in range(455,467):
     testData.append(data.Mean[i])
