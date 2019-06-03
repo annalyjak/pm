@@ -25,7 +25,7 @@ def read_nsidc_temp(path):
     for filename in glob.iglob('../data/' + path + '/*.nc'):
         dataset = Dataset(filename, 'r')
         date = filename[len(filename) - 13:len(filename) - 7]
-        print(date)
+        # print(date)
         alldataset.append([dataset, date])
 
     return create_dataframes_temp(alldataset)
@@ -101,11 +101,13 @@ def main():
     # plot_data('south', '1979', '2017')
 
     # get data:
-    # data = read_nsidc_all('north', '1985', '1990')
+    data = read_nsidc_all('north', '1979', '2016')
     # model_procedure(data)
 
     dataset = read_nsidc_temp('temp')
-    plot_temperature(dataset, 'Temperatura w 1979-2016')
+    print(data)
+    print(dataset)
+    # plot_temperature(dataset, 'Temperatura w 1979-2016')
 
 
 if __name__ == "__main__":

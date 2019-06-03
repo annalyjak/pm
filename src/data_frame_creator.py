@@ -39,7 +39,9 @@ def get_all_temperatures_mean(datasets):
     dataframes = []
     for dataset, date in datasets:
         a1, a2, a3 = create_temp_frames(dataset)
-        dataframes.append([a1, a2, a3, int(date), str(date)])
+        d8 = datetime(year=int(date[0:4]), month=int(date[4:len(date)]), day=1)
+        # d8 = d8.replace(year=int(date[0:4]), month=int(date[4:len(date)]))
+        dataframes.append([d8, a2, a3, int(date), str(date)])
     return dataframes
 
 
@@ -48,7 +50,7 @@ def get_all_dates_and_means2(datasets):
     for dataset, date in datasets:
         d, m, s, m2, m3 = calculate_mean2(dataset)
         d8 = datetime.fromtimestamp(d)
-        d8 = d8.replace(year=int(date[0:4]), month=int(date[4:len(date)]))
+        d8 = datetime(year=int(date[0:4]), month=int(date[4:len(date)]), day=1)   # d8.replace(year=int(date[0:4]), month=int(date[4:len(date)]), day=1)
         dataframes.append([d8, m, s, m2, m3, int(date)])
     return dataframes
 
