@@ -1,6 +1,7 @@
 import numpy as np
 from datetime import datetime
 import pandas as pd
+# from statsmodels.tsa.seasonal import seasonal_decompose
 
 
 def create_temp_frames(dataset):
@@ -71,3 +72,30 @@ def create_dataframes_temp(datasets):
     sorted_df = df.sort_values(by=['YearMonth'])
     print(sorted_df)
     return sorted_df
+
+
+def create_endset(dates, concM, concStd, concNasa, concB, temp):
+    dataset = pd.DataFrame({'TempCelc': temp, 'Mean': concM, 'Std': concStd, 'NASA': concNasa, 'Bootstrap': concB})
+    dataset.index = pd.DatetimeIndex(data=dates)
+    return dataset
+
+
+def temp_temp():
+    dates = []
+    temper = [-5, 0, 5, 13, 15, 12, 20, 23, 20, 10, 3, -5]
+    conc = [0.5, 0.9, 0.5, 0.13, 0.15, 0.12, 0.20, 0.23, 0.20, 0.10, 0.3, 0.5]
+    for i in range(1, 13):
+        d = datetime(year=2017, month=i, day=1)
+        dates.append(d)
+    dataset = create_endset(dates, conc, conc, conc, conc, temper)
+    print(dataset)
+    ts_log = np.log(dataset.Mean)
+    # decomposition = seasonal_decompose(ts_log)
+    #
+    # trend = decomposition.trend
+    # seasonal = decomposition.seasonal
+    # residual = decomposition.resid
+
+    # print(seasonal)
+    # print(residual)
+

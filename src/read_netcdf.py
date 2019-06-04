@@ -1,9 +1,9 @@
-from netCDF4 import Dataset
+# from netCDF4 import Dataset
 import glob
-from pandas.plotting import register_matplotlib_converters
-from src.charts_generator import plot_data2, plot_histogram, plot_model, plot_temperature
-from src.data_frame_creator import create_dataframes, create_dataframes_temp
-from src.model_creator import create_model, linear_regression_model, predict_using_model, svr_model, svr_lin_model
+# from pandas.plotting import register_matplotlib_converters
+# from src.charts_generator import plot_data2, plot_histogram, plot_model, plot_temperature
+from src.data_frame_creator import create_dataframes, create_dataframes_temp, temp_temp
+# from src.model_creator import create_model, linear_regression_model, predict_using_model, svr_model, svr_lin_model
 import numpy as np
 
 
@@ -91,7 +91,7 @@ def model_procedure(data):
 
 
 def main():
-    register_matplotlib_converters()
+    # register_matplotlib_converters()
     # info_data_nsidc()
     # plot_year(data, 'north', '1987')
 
@@ -101,13 +101,14 @@ def main():
     # plot_data('south', '1979', '2017')
 
     # get data:
-    data = read_nsidc_all('north', '1979', '2016')
+    # data = read_nsidc_all('north', '1979', '2016')
     # model_procedure(data)
 
-    dataset = read_nsidc_temp('temp')
-    print(data)
-    print(dataset)
+    # dataset = read_nsidc_temp('temp')
+    # print(data)
+    # print(dataset)
     # plot_temperature(dataset, 'Temperatura w 1979-2016')
+    temp_temp()
 
 
 if __name__ == "__main__":
