@@ -1,9 +1,10 @@
-# from netCDF4 import Dataset
+from netCDF4 import Dataset
 import glob
-# from pandas.plotting import register_matplotlib_converters
-# from src.charts_generator import plot_data2, plot_histogram, plot_model, plot_temperature
-from src.data_frame_creator import create_dataframes, create_dataframes_temp, temp_temp
-# from src.model_creator import create_model, linear_regression_model, predict_using_model, svr_model, svr_lin_model
+from pandas.plotting import register_matplotlib_converters
+from src.charts_generator import plot_data2, plot_histogram, plot_model, plot_temperature, plot_datatime_series
+from src.data_analyze import print_trend_seasonality_and_noise, ARIMA
+from src.data_frame_creator import create_dataframes, create_dataframes_temp, temp_temp, create_endset
+from src.model_creator import create_model, linear_regression_model, predict_using_model, svr_model, svr_lin_model
 import numpy as np
 
 
@@ -67,7 +68,7 @@ def plot_data(path, year_start, year_end):
 def split_into_sets(data):
     x_labels = [str(x) for x in data.YearMonth]
     x = list(zip(range(0, len(data.YearMonth))))   # data.YearMonth
-    y = list(data.NASA) # MUST BE NOT NAN AND INF
+    y = list(data.NASA)  # MUST BE NOT NAN AND INF
     x_train = x[:30]
     y_train = y[:30]
     x_train_label = x_labels[:30]
@@ -90,8 +91,14 @@ def model_procedure(data):
     plot_model(regr, x_test, y_test, y_pred, x_train_l, x_test_l)
 
 
+def prepare_dataset():
+    data = read_nsidc_all('north', '1979', '2016')
+    temperature = read_nsidc_temp('temp')
+    return create_endset(data.Datatime, data.Mean, data.Std, data.NASA, data.Bootstrap, temperature.TempCelc)
+
+
 def main():
-    # register_matplotlib_converters()
+    register_matplotlib_converters()
     # info_data_nsidc()
     # plot_year(data, 'north', '1987')
 
@@ -104,11 +111,30 @@ def main():
     # data = read_nsidc_all('north', '1979', '2016')
     # model_procedure(data)
 
-    # dataset = read_nsidc_temp('temp')
+    # temperature = read_nsidc_temp('temp')
     # print(data)
-    # print(dataset)
-    # plot_temperature(dataset, 'Temperatura w 1979-2016')
-    temp_temp()
+    # print(temperature)
+    # plot_temperature(temperature, 'Temperatura w 1979-2016')
+
+    endSet = prepare_dataset()
+    print(endSet.index[len(endSet)-12])
+    # plot_datatime_series(endSet.TempCelc, "Temperatura w stopniach C")
+    # plot_datatime_series(endSet.NASA, "Wartość parametru NASA")
+    # plot_datatime_series(endSet.Bootstrap, "Wartość parametru Bootstrap")
+    # plot_datatime_series(endSet.Mean, "Wartość parametru Mean")
+    # plot_datatime_series(endSet.Std, "Wartość parametru Std")
+
+    # print_trend_seasonality_and_noise(endSet.TempCelc, "temperatura")
+    # print_trend_seasonality_and_noise(endSet.NASA, "NASA")
+    # print_trend_seasonality_and_noise(endSet.Bootstrap, "Bootstrap")
+    # print_trend_seasonality_and_noise(endSet.Mean, "Mean")
+    # print_trend_seasonality_and_noise(endSet.Std, "Std")
+
+    ARIMA(endSet.TempCelc, "TempCelc")
+    ARIMA(endSet.NASA, "NASA")
+    ARIMA(endSet.Bootstrap, "Bootstrap")
+    ARIMA(endSet.Mean, "Mean")
+    ARIMA(endSet.Std, "Std")
 
 
 if __name__ == "__main__":

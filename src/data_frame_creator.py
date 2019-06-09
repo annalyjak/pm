@@ -77,6 +77,11 @@ def create_dataframes_temp(datasets):
 def create_endset(dates, concM, concStd, concNasa, concB, temp):
     dataset = pd.DataFrame({'TempCelc': temp, 'Mean': concM, 'Std': concStd, 'NASA': concNasa, 'Bootstrap': concB})
     dataset.index = pd.DatetimeIndex(data=dates)
+    dataset["Mean"] = dataset["Mean"].convert_objects(convert_numeric=True).astype(float)
+    dataset["Std"] = dataset["Std"].convert_objects(convert_numeric=True).astype(float)
+    dataset["Bootstrap"] = dataset["Bootstrap"].convert_objects(convert_numeric=True).astype(float)
+    for col in dataset.columns:
+        dataset = dataset[~pd.isnull(dataset[col])]
     return dataset
 
 

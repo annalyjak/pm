@@ -52,6 +52,13 @@ def plot_model(model, X_test, Y_test, Y_pred, x_train_l, x_test_l):
     plt.show()
 
 
+def plot_datatime_series(to_plot, title):
+    to_plot.plot(figsize=(15, 6))
+    plt.xlabel("Czas")
+    plt.ylabel(title)
+    plt.savefig('../plots/ostateczne/' + title + '.png', dpi=100)
+    plt.show()
+
 
 
 
